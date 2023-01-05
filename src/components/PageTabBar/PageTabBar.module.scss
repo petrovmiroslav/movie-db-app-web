@@ -1,0 +1,41 @@
+.pageTabBar {
+  min-height: var(--tabBarMinHeight);
+  padding-top: var(--dp__8);
+  padding-bottom: var(--dp__8);
+  position: fixed;
+  bottom: 0;
+  background-color: var(--colors__background_light);
+  box-shadow: var(--shadow__8dp);
+  z-index: 1;
+}
+
+.list {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.itemContainer {
+  display: block;
+  flex: 1 0 33%;
+}
+
+.item {
+  display: block;
+  padding: var(--dp__8);
+  border-radius: var(--dp__8);
+  font: var(--fonts__s);
+  color: var(--colors__background_very_dark);
+  text-align: center;
+}
+
+.item_selected {
+  color: var(--colors__primary);
+}
+
+.icon {
+  display: block;
+  width: var(--dp__24);
+  height: var(--dp__24);
+  margin: 0 auto var(--dp__4);
+}

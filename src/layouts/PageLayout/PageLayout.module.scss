@@ -1,0 +1,18 @@
+@import "../../styles/shared.module";
+
+.container {
+  display: flex;
+  padding: 0;
+  flex-grow: 1;
+  flex-direction: column;
+
+  @include media-breakpoint-up(md) {
+    box-shadow: var(--shadow__16dp);
+  }
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}

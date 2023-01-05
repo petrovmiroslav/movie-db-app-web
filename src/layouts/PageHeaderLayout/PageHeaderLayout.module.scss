@@ -1,0 +1,20 @@
+.pageHeader {
+  display: flex;
+  min-height: var(--pageHeaderMinHeight);
+  padding-top: var(--dp__8);
+  padding-bottom: var(--dp__8);
+  position: fixed;
+  top: 0;
+  align-items: center;
+  z-index: 1;
+}
+
+.shadow {
+  box-shadow: var(--shadow__8dp);
+  z-index: -1;
+}
+
+.background {
+  background-color: var(--colors__background_light);
+  z-index: -1;
+}

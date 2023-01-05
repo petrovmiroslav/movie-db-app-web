@@ -1,0 +1,6 @@
+.slider {
+  display: flex;
+  margin: 0 calc(-1 * var(--content-padding));
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}

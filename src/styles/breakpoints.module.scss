@@ -1,0 +1,17 @@
+// !!!important
+// if it's changed, Breakpoints type in breakPoints.ts should be changed too
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+//export all $grid-breakpoints to js like object {XS: number, SM: number....}
+:export {
+  @each $key, $value in $grid-breakpoints {
+    #{to-upper-case($key)}: $value;
+  }
+}

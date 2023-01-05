@@ -1,0 +1,36 @@
+.card {
+  display: block;
+  width: 42%;
+  max-width: 22rem;
+  flex-shrink: 0;
+  padding: var(--dp__16);
+  position: relative;
+  border-radius: var(--dp__8);
+  color: var(--colors__font_dark);
+  scroll-snap-align: start;
+}
+
+.posterContainer {
+  box-shadow: var(--shadow__2dp);
+}
+
+.title {
+  --linesToShow: 2;
+  margin-top: var(--dp__8);
+}
+
+.genres {
+  font: var(--fonts__m);
+}
+
+.voteAverage {
+  padding: 0 var(--dp__8);
+  position: absolute;
+  top: var(--dp__12);
+  left: var(--dp__4);
+  border-radius: var(--dp__4);
+  background-color: var(--colors__primary);
+  box-shadow: var(--shadow__4dp);
+  font: var(--fonts__s);
+  color: var(--colors__background_light);
+}

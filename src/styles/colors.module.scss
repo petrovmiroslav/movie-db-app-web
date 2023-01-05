@@ -1,0 +1,28 @@
+// !!!important
+// if it's changed, Colors type in colors.ts must be changed too
+// either you must add css var to :root in index.scss
+$colors: (
+  "primary": #f60,
+
+  "background_light": #fff,
+  "background_medium": #f7f7f7,
+  "background_dark": #b2b2b2,
+  "background_very_dark": #0c0c0c,
+
+  "font_dark": #1f1f1f,
+  "font_medium": #333,
+  "font_light": rgba(0, 0, 0, 0.4),
+  "font_extra_light": rgba(255, 255, 255, 0.5),
+  "placeholder": #eeeeee,
+);
+
+@function getColorVarValue($name) {
+  @return map-get($colors, $name);
+}
+
+//export all $colors to js like object {PRIMARY: string, SECONDARY: string....}
+:export {
+  @each $color, $value in $colors {
+    #{to-upper-case(unquote($color))}: $value;
+  }
+}

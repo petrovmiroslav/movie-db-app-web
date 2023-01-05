@@ -1,0 +1,77 @@
+import React from "react";
+import type { AppProps as NextAppProps } from "next/app";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "../utils/styles";
+import "../styles/index.scss";
+import Head from "next/head";
+import { ConfigurationContextProvider } from "../features/configuration/configuration.contexts";
+import { AppProps, getLayoutFallback, PageWithLayout } from "../utils/next";
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
+import { FavoritesDictContextProvider } from "../features/favorites/favorites.contexts";
+import { ReactQueryDevtoolsProd } from "../components/ReactQueryDevtoolsProd/ReactQueryDevtoolsProd";
+import { GenresDictContextProvider } from "../features/genres/genres.contexts";
+import { WindowSizeContextProvider } from "../hooks/useWindowSize";
+import { HeaderHeightContextProvider } from "../hooks/useHeaderHeight";
+import { Colors } from "../constants/colors";
+
+type CommonAppProps = {
+  children: React.ReactNode;
+};
+const CommonApp = (props: CommonAppProps) => {
+  const { children } = props;
+
+  return (
+    <>
+      <Head>
+        <title>The Movie DB App</title>
+        <meta name="description" content="The Movie DB App" />
+        <link rel="icon" href="/public/favicon.ico" />
+        <meta name="color-scheme" content="only light" />
+        <meta name="theme-color" content={Colors.BACKGROUND_LIGHT} />
+      </Head>
+
+      <ConfigurationContextProvider>
+        <FavoritesDictContextProvider>
+          <GenresDictContextProvider>
+            <WindowSizeContextProvider>
+              <HeaderHeightContextProvider>
+                {children}
+              </HeaderHeightContextProvider>
+            </WindowSizeContextProvider>
+          </GenresDictContextProvider>
+        </FavoritesDictContextProvider>
+      </ConfigurationContextProvider>
+
+      <ReactQueryDevtoolsProd />
+    </>
+  );
+};
+
+type AppPropsWithLayout = NextAppProps<AppProps> & {
+  Component: PageWithLayout;
+};
+
+const App = ({ Component, pageProps }: AppPropsWithLayout) => {
+  const getLayout = Component.getLayout ?? getLayoutFallback;
+
+  const { queryClientDehydratedState, ...restPageProps } = pageProps;
+
+  const [queryClient] = React.useState(() => new QueryClient());
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Hydrate state={queryClientDehydratedState}>
+        <CommonApp>{getLayout(<Component {...restPageProps} />)}</CommonApp>
+      </Hydrate>
+    </QueryClientProvider>
+  );
+};
+
+// noinspection JSUnusedGlobalSymbols
+export default App;

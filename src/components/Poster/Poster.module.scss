@@ -1,0 +1,12 @@
+.poster {
+  position: relative;
+  border-radius: var(--dp__8);
+  background-color: var(--colors__placeholder);
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / var(--poster_aspect_ratio));
+  }
+}

@@ -1,0 +1,24 @@
+.genres {
+  font: var(--fonts__s);
+}
+
+.voteAverage {
+  margin-top: var(--dp__16);
+  color: var(--colors__primary);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.duration {
+  font: var(--fonts__s);
+  color: var(--colors__font_medium);
+}
+
+.favoriteDate {
+  font: var(--fonts__s);
+  color: var(--colors__font_light);
+}

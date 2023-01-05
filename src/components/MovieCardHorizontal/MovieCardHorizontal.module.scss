@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  padding: var(--dp__8);
+  border-radius: var(--dp__8);
+  background-color: var(--colors__background_light);
+  box-shadow: var(--shadow__2dp);
+  color: var(--colors__font_dark);
+}
+
+.poster {
+  min-width: 7rem;
+}
+
+.content {
+  min-width: 0;
+  margin-left: var(--dp__8);
+  padding: var(--dp__8) 0;
+  flex: 1;
+}
+
+.icon {
+  width: var(--dp__8);
+  margin: 0 var(--dp__8);
+  transform: rotate(180deg);
+  color: var(--colors__background_dark);
+}

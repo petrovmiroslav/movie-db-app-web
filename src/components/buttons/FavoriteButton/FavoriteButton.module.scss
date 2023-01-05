@@ -1,0 +1,10 @@
+.button {
+  width: var(--dp__32);
+  height: var(--dp__32);
+  position: relative;
+  color: var(--colors__primary);
+}
+
+.icon_hidden {
+  opacity: 0;
+}
