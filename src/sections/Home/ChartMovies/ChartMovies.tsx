@@ -33,7 +33,11 @@ export const ChartMovies = React.memo<ChartMoviesProps>((props) => {
     <section className={cn(commonCss.contentContainer)}>
       <SectionHeader>{header}</SectionHeader>
 
-      <MoviesSlider moviesList={moviesList} onEndReached={fetchNextPage} />
+      <MoviesSlider
+        moviesList={moviesList}
+        onEndReached={fetchNextPage}
+        withImgPriority={true}
+      />
     </section>
   );
 });
