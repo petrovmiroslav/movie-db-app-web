@@ -15,6 +15,7 @@ import css from "./Hero.module.scss";
 import { useImageConfiguration } from "../../../features/configuration/configuration.hooks";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { createInterpolation } from "../../../utils/interpolate";
+import { MOVIE_PAGE_TITLE_TEST_ID } from "../../../constants/e2e";
 
 const HERO_IMAGE_MAX_SCALE_VALUE = 1.5;
 const HERO_IMAGE_MIN_SCALE_VALUE = 1;
@@ -103,7 +104,9 @@ export const Hero = React.memo<HeroProps>((props) => {
       </div>
 
       <div className={css.content}>
-        <h2 className={css.title}>{title}</h2>
+        <h2 className={css.title} data-testid={MOVIE_PAGE_TITLE_TEST_ID}>
+          {title}
+        </h2>
         <p className={css.text}>
           {voteAverage !== undefined && (
             <span className={cn(css.text, css.text_vote)}>

@@ -23,7 +23,7 @@ import { Colors } from "../constants/colors";
 type CommonAppProps = {
   children: React.ReactNode;
 };
-const CommonApp = (props: CommonAppProps) => {
+export const CommonApp = (props: CommonAppProps) => {
   const { children } = props;
 
   return (

@@ -12,6 +12,11 @@ import { favoritesQueries } from "../../../features/favorites/favorites.queries"
 import { FavoritesTypes } from "../../../features/favorites/favorites.types";
 import { useFavoritesDict } from "../../../features/favorites/favorites.hooks";
 
+export const DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT = "add to favorites";
+export const DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT = "remove from favorites";
+export const EMPTY_ICON_TEST_ID = "FavoriteButton__EMPTY_ICON_TEST_ID";
+export const FILLED_ICON_TEST_ID = "FavoriteButton__FILLED_ICON_TEST_ID";
+
 type FavoriteButtonProps = {
   movieId: MovieId;
   className?: string;
@@ -50,13 +55,19 @@ export const FavoriteButton = React.memo<FavoriteButtonProps>((props) => {
   return (
     <button
       className={cn(commonCss.interactive, css.button, className)}
-      aria-label={isFavorite ? "remove from favorites" : "add to favorites"}
+      aria-label={
+        isFavorite
+          ? DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT
+          : DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT
+      }
       onClick={onClickHandler}
     >
       <Icons.FavoritesOutlined
+        data-testid={EMPTY_ICON_TEST_ID}
         className={cn(commonCss.absoluteCenter, isFavorite && css.icon_hidden)}
       />
       <Icons.FavoritesFilled
+        data-testid={FILLED_ICON_TEST_ID}
         className={cn(commonCss.absoluteCenter, !isFavorite && css.icon_hidden)}
       />
     </button>

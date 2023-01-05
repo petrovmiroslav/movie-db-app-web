@@ -1,5 +1,6 @@
 import { appAxiosInstance, requestErrorMiddleware } from "../../utils/api";
 import {
+  ApiPaths,
   ApiSortByParamValue,
   DEFAULT_INCLUDE_LANGUAGE_PARAM,
   DiscoverMoviesSortByParams,
@@ -31,7 +32,7 @@ export const fetchMovieApi = async ({
   movieId,
   includes,
 }: FetchMovieApiParams): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(`/movie/${movieId}`, {
+  appAxiosInstance.get<unknown>(ApiPaths.fetchMovieApi(movieId), {
     params: {
       append_to_response: includes?.join(),
       include_image_language: includes
@@ -52,13 +53,15 @@ export const fetchMovieRequest = (
 export const fetchPopularMoviesApi = async (
   params?: PaginationApiParams
 ): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>("/movie/popular", {
+  appAxiosInstance.get<unknown>(ApiPaths.fetchPopularMoviesApi, {
     params,
   });
 
+export type FetchPopularMoviesRequestResponse = PaginationResponse<Movie[]>;
+
 export const fetchPopularMoviesRequest = (
   params?: PaginationApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<FetchPopularMoviesRequestResponse> =>
   requestErrorMiddleware(
     fetchPopularMoviesApi(params).then(({ data }) =>
       paginationDtoMapper(
@@ -71,13 +74,15 @@ export const fetchPopularMoviesRequest = (
 export const fetchTopRatedMoviesApi = async (
   params?: PaginationApiParams
 ): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>("/movie/top_rated", {
+  appAxiosInstance.get<unknown>(ApiPaths.fetchTopRatedMoviesApi, {
     params,
   });
 
+export type FetchTopRatedMoviesRequestResponse = PaginationResponse<Movie[]>;
+
 export const fetchTopRatedMoviesRequest = (
   params?: PaginationApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<FetchTopRatedMoviesRequestResponse> =>
   requestErrorMiddleware(
     fetchTopRatedMoviesApi(params).then(({ data }) =>
       paginationDtoMapper(
@@ -94,13 +99,15 @@ export type SearchMoviesApiParams = {
 export const searchMoviesApi = async (
   params: SearchMoviesApiParams
 ): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>("/search/movie", {
+  appAxiosInstance.get<unknown>(ApiPaths.searchMoviesApi, {
     params,
   });
 
+export type SearchMoviesRequestResponse = PaginationResponse<Movie[]>;
+
 export const searchMoviesRequest = (
   params: SearchMoviesApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<SearchMoviesRequestResponse> =>
   requestErrorMiddleware(
     searchMoviesApi(params).then(({ data }) =>
       paginationDtoMapper(
@@ -118,13 +125,18 @@ export const fetchRecommendationsMoviesApi = async ({
   movieId,
   page,
 }: FetchRecommendationsMoviesApiParams): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(`/movie/${movieId}/recommendations`, {
-    params: { page },
-  });
+  appAxiosInstance.get<unknown>(
+    ApiPaths.fetchRecommendationsMoviesApi(movieId),
+    {
+      params: { page },
+    }
+  );
+
+export type FetchRecommendationsMoviesResponse = PaginationResponse<Movie[]>;
 
 export const fetchRecommendationsMoviesRequest = (
   params: FetchRecommendationsMoviesApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<FetchRecommendationsMoviesResponse> =>
   requestErrorMiddleware(
     fetchRecommendationsMoviesApi(params).then(({ data }) =>
       paginationDtoMapper(
@@ -142,13 +154,15 @@ export const fetchSimilarMoviesApi = async ({
   movieId,
   page,
 }: FetchSimilarMoviesApiParams): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(`/movie/${movieId}/similar`, {
+  appAxiosInstance.get<unknown>(ApiPaths.fetchSimilarMoviesApi(movieId), {
     params: { page },
   });
 
+export type FetchSimilarMoviesResponse = PaginationResponse<Movie[]>;
+
 export const fetchSimilarMoviesRequest = (
   params: FetchSimilarMoviesApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<FetchSimilarMoviesResponse> =>
   requestErrorMiddleware(
     fetchSimilarMoviesApi(params).then(({ data }) =>
       paginationDtoMapper(
@@ -172,11 +186,13 @@ export type DiscoverMovieApiParams = Partial<{
 export const discoverMovieApi = async (
   params: DiscoverMovieApiParams
 ): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>("/discover/movie", { params });
+  appAxiosInstance.get<unknown>(ApiPaths.discoverMovieApi, { params });
+
+export type DiscoverMovieResponse = PaginationResponse<Movie[]>;
 
 export const discoverMovieRequest = (
   params: DiscoverMovieApiParams
-): Promise<PaginationResponse<Movie[]>> =>
+): Promise<DiscoverMovieResponse> =>
   requestErrorMiddleware(
     discoverMovieApi(params).then(({ data }) =>
       paginationDtoMapper(

@@ -1,3 +1,5 @@
+import { MovieId } from "../features/movies/movies.types";
+
 export enum ApiParamLanguages {
   EN = "en",
   NULL = "null",
@@ -24,3 +26,19 @@ export enum DiscoverMoviesSortByParams {
   VOTE_COUNT_ASC = "vote_count.asc",
   VOTE_COUNT_DESC = "vote_count.desc",
 }
+
+export const ApiPaths = {
+  fetchConfigurationApi: "/configuration",
+
+  fetchGenresApi: "/genre/movie/list",
+
+  fetchMovieApi: (movieId: MovieId | string) => `/movie/${movieId}`,
+  fetchRecommendationsMoviesApi: (movieId: MovieId | string) =>
+    `/movie/${movieId}/recommendations`,
+  fetchSimilarMoviesApi: (movieId: MovieId | string) =>
+    `/movie/${movieId}/similar`,
+  fetchPopularMoviesApi: "/movie/popular",
+  fetchTopRatedMoviesApi: "/movie/top_rated",
+  searchMoviesApi: "/search/movie",
+  discoverMovieApi: "/discover/movie",
+} as const;
