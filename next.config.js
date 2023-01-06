@@ -5,7 +5,6 @@ const nextConfig = {
   images: {
     deviceSizes: [640, 750, 828],
   },
-  output: "standalone",
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
