@@ -5,7 +5,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import "../utils/styles";
 import "../styles/index.scss";
-import Head from "next/head";
 import { ConfigurationContextProvider } from "../features/configuration/configuration.contexts";
 import { AppProps, getLayoutFallback, PageWithLayout } from "../utils/next";
 import {
@@ -18,7 +17,7 @@ import { ReactQueryDevtoolsProd } from "../components/ReactQueryDevtoolsProd/Rea
 import { GenresDictContextProvider } from "../features/genres/genres.contexts";
 import { WindowSizeContextProvider } from "../hooks/useWindowSize";
 import { HeaderHeightContextProvider } from "../hooks/useHeaderHeight";
-import { Colors } from "../constants/colors";
+import { AppHead } from "../components/AppHead/AppHead";
 
 type CommonAppProps = {
   children: React.ReactNode;
@@ -28,13 +27,7 @@ export const CommonApp = (props: CommonAppProps) => {
 
   return (
     <>
-      <Head>
-        <title>The Movie DB App</title>
-        <meta name="description" content="The Movie DB App" />
-        <link rel="icon" href="/public/favicon.ico" />
-        <meta name="color-scheme" content="only light" />
-        <meta name="theme-color" content={Colors.BACKGROUND_LIGHT} />
-      </Head>
+      <AppHead />
 
       <ConfigurationContextProvider>
         <FavoritesDictContextProvider>
