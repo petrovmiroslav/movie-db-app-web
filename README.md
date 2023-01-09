@@ -1,34 +1,30 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# The Movie Database
 
-## Getting Started
+[Home page](https://movie-db-app-web.vercel.app/)
 
-First, run the development server:
+- TypeScript
+- SSR (Next.js)
+- no redux ([React Native version built with Redux](https://github.com/petrovmiroslav/movieDBapp))
+- used open [api](https://developers.themoviedb.org/3/getting-started/introduction)
+- Zod api validation
+- api mocking (msw)
+- unit tests (Jest)
+- e2e tests (Playwright)
+- deployment to Vercel
+- sensitive information security (environment variables)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Lighthouse reports
+- Home page mobile
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <img src="https://lh3.googleusercontent.com/pw/AL9nZEWLO62-LkBpz3ZUC6TTxbzvqxm7NXgGNtAb1iENzI3TGBJUP7WzcJBuPsiDXVdPMF747ViYV5E3c2ZwkUqInPJK_nCnWFSWMWUF00ilSpZDF3tVlPapwL_btof9xOo9OD6QNEQ4hqv4Daq9XRh25no=d" alt="Home page lighthouse report mobile" width="500"/>
+- Home page desktop
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+  <img src="https://lh3.googleusercontent.com/pw/AL9nZEXAdQhcJv2sGV5-ZfgP2b_tBKzI6RssLRTDpX05gk5r0EdRp-aqJjBOcOPPPTQPUjEgcuoLZomB8CyxGFredYGf4ETXUg2AkZWrTu5rclfixs5MgX9GPOTmykASE4qobF4BkMJlgqulYjjiRZDa_Cg=d" alt="Home page lighthouse report desktop" width="500"/>
+- Movie page mobile
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+  <img src="https://lh3.googleusercontent.com/pw/AL9nZEW6Tlii_L1ywYIYF7KZs5bf76L3qeHSNB17_rASY-m3_aKrrTCHsmyVb19FSc4zqTlr6r1SDuwQYx8pP4QFEji7Z5XazOqQGYJepGlItcaunDGClcTVL5N7aAUbYsZFuy0MN5jaZMFcpC2kPXY7bpw=d" alt="Movie page lighthouse report mobile" width="500"/>
+- Movie page desktop
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+  <img src="https://lh3.googleusercontent.com/pw/AL9nZEXzPW2GxAIyHRfF2qjxppzkoZwgFL5uQQVO8JylwYntBy4V41_5DUs0FXHv_a7-fJGji8OhJMCXs1S0hFID0ZdSmN9skqtqa4YCr8caaBRmuVZcUQgFp7aqC2pfVypLBwelOltdHa54-NsWfdeYSEI=d" alt="Movie page lighthouse report desktop" width="500"/>
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+[About me](https://petrovmiroslav.github.io/miroslavpetrov/)
