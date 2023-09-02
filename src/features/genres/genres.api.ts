@@ -1,13 +1,21 @@
-import { appAxiosInstance } from "../../utils/api";
+import { appAxiosInstance } from "../../utils/api/api";
 import { Genre, GenresDtoSchema } from "./genres.types";
 import { genresDtoMapper } from "./genres.mappers";
 import { AxiosResponse } from "axios";
-import { ApiPaths } from "../../constants/api";
+import { ApiPaths, LanguageApiParams } from "../../constants/api";
 
-export const fetchGenresApi = async (): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(ApiPaths.fetchGenresApi);
+export type FetchGenresApiParams = LanguageApiParams;
 
-export const fetchGenresRequest = async (): Promise<Genre[] | undefined> =>
-  fetchGenresApi().then(({ data }) =>
+export const fetchGenresApi = async (
+  params: FetchGenresApiParams
+): Promise<AxiosResponse<unknown>> =>
+  appAxiosInstance.get<unknown>(ApiPaths.fetchGenresApi, {
+    params,
+  });
+
+export const fetchGenresRequest = async (
+  params: FetchGenresApiParams
+): Promise<Genre[] | undefined> =>
+  fetchGenresApi(params).then(({ data }) =>
     genresDtoMapper(GenresDtoSchema.parse(data))
   );

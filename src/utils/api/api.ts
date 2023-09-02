@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
-import { config } from "../constants/config";
-import { DEFAULT_INCLUDE_LANGUAGE_PARAM } from "../constants/api";
-import { ErrorWithMessage, isResponseError } from "./errors";
+import { config } from "../../constants/config";
+import { ErrorWithMessage, isResponseError } from "../errors";
 
 type ResponseErrorDataType = {
   details?: string[];
@@ -30,9 +29,6 @@ export const appAxiosInstance = axios.create({
 appAxiosInstance.interceptors.request.use((config) => {
   if (!config.params) {
     config.params = {};
-  }
-  if (!config.params.language) {
-    config.params.language = DEFAULT_INCLUDE_LANGUAGE_PARAM;
   }
 
   return config;

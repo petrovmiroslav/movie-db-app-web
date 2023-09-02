@@ -1,4 +1,5 @@
 import { Duration, intervalToDuration, isValid } from "date-fns";
+import { i18n } from "next-i18next";
 
 export type DateParam = Date | number | string | undefined | null;
 
@@ -68,7 +69,13 @@ export const convertMinutesToDuration = (minutes: number): Duration => {
 /** Duration format 1 h 28 m*/
 export const formatDurationToString = (duration: Duration): string => {
   const { hours, minutes } = duration;
-  const stringArr = [hours ? hours + " h" : "", minutes ? minutes + " m" : ""];
+  const hoursText = i18n?.t("utils.dates.formatDurationToString.hours") ?? "h";
+  const minutesText =
+    i18n?.t("utils.dates.formatDurationToString.minutes") ?? "m";
+  const stringArr = [
+    hours ? hours + ` ${hoursText}` : "",
+    minutes ? minutes + ` ${minutesText}` : "",
+  ];
   return stringArr.join(" ").trim();
 };
 

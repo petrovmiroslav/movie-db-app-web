@@ -11,6 +11,7 @@ import { Icons } from "../../../components/Icons/Icons";
 import { cn, commonCss } from "../../../utils/styles";
 import css from "./Header.module.scss";
 import { useHeaderHeight } from "../../../hooks/useHeaderHeight";
+import { useTranslation } from "next-i18next";
 
 const scrollHandlerDelay = 64;
 const defaultShadowStyle = { opacity: 0 };
@@ -22,6 +23,7 @@ export type HeaderProps = {
 
 export const Header = React.memo<HeaderProps>((props) => {
   const { searchInputValue, onSearchInputValueChange } = props;
+  const { t } = useTranslation(["common", "search"]);
 
   const [headerHeight] = useHeaderHeight();
 
@@ -77,7 +79,7 @@ export const Header = React.memo<HeaderProps>((props) => {
       <TextInput
         value={searchInputValue}
         onValueChange={onSearchInputValueChange}
-        placeholder="Search"
+        placeholder={t("header.inputPlaceholder", { ns: "search" })}
         autoFocus={true}
         leftIcon={<Icons.Search className={css.icon} />}
         onFocus={expandClearButton}
@@ -95,7 +97,9 @@ export const Header = React.memo<HeaderProps>((props) => {
         onFocus={expandClearButton}
         onBlur={collapseClearButton}
       >
-        <span className={css.clearButton__text}>clear</span>
+        <span className={css.clearButton__text}>
+          {t("header.clearButton", { ns: "search" })}
+        </span>
       </button>
     </PageHeaderLayout>
   );

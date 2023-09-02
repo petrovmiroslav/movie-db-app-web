@@ -1,9 +1,9 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { fetchGenresRequest } from "./genres.api";
+import { FetchGenresApiParams, fetchGenresRequest } from "./genres.api";
 
 export const genresQueries = createQueryKeys("genres", {
-  movie: {
-    queryKey: null,
-    queryFn: fetchGenresRequest,
-  },
+  movie: (params: FetchGenresApiParams) => ({
+    queryKey: [params],
+    queryFn: () => fetchGenresRequest(params),
+  }),
 });

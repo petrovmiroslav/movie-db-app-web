@@ -1,9 +1,9 @@
-import { appAxiosInstance, requestErrorMiddleware } from "../../utils/api";
+import { appAxiosInstance, requestErrorMiddleware } from "../../utils/api/api";
 import {
   ApiPaths,
   ApiSortByParamValue,
-  DEFAULT_INCLUDE_LANGUAGE_PARAM,
   DiscoverMoviesSortByParams,
+  LanguageApiParams,
 } from "../../constants/api";
 import {
   Movie,
@@ -26,18 +26,16 @@ export enum AppendToResponse {
 export type FetchMovieApiParams = {
   movieId: MovieId;
   includes?: AppendToResponse[];
-};
+} & LanguageApiParams;
 
-export const fetchMovieApi = async ({
-  movieId,
-  includes,
-}: FetchMovieApiParams): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(ApiPaths.fetchMovieApi(movieId), {
+export const fetchMovieApi = async (
+  params: FetchMovieApiParams
+): Promise<AxiosResponse<unknown>> =>
+  appAxiosInstance.get<unknown>(ApiPaths.fetchMovieApi(params.movieId), {
     params: {
-      append_to_response: includes?.join(),
-      include_image_language: includes
-        ? DEFAULT_INCLUDE_LANGUAGE_PARAM
-        : undefined,
+      append_to_response: params.includes?.join(),
+      include_image_language: params.language,
+      language: params.language,
     },
   });
 
@@ -50,8 +48,11 @@ export const fetchMovieRequest = (
     )
   );
 
+export type FetchPopularMoviesApiParams = PaginationApiParams &
+  LanguageApiParams;
+
 export const fetchPopularMoviesApi = async (
-  params?: PaginationApiParams
+  params?: FetchPopularMoviesApiParams
 ): Promise<AxiosResponse<unknown>> =>
   appAxiosInstance.get<unknown>(ApiPaths.fetchPopularMoviesApi, {
     params,
@@ -60,7 +61,7 @@ export const fetchPopularMoviesApi = async (
 export type FetchPopularMoviesRequestResponse = PaginationResponse<Movie[]>;
 
 export const fetchPopularMoviesRequest = (
-  params?: PaginationApiParams
+  params?: FetchPopularMoviesApiParams
 ): Promise<FetchPopularMoviesRequestResponse> =>
   requestErrorMiddleware(
     fetchPopularMoviesApi(params).then(({ data }) =>
@@ -71,8 +72,11 @@ export const fetchPopularMoviesRequest = (
     )
   );
 
+export type FetchTopRatedMoviesApiParams = PaginationApiParams &
+  LanguageApiParams;
+
 export const fetchTopRatedMoviesApi = async (
-  params?: PaginationApiParams
+  params?: FetchTopRatedMoviesApiParams
 ): Promise<AxiosResponse<unknown>> =>
   appAxiosInstance.get<unknown>(ApiPaths.fetchTopRatedMoviesApi, {
     params,
@@ -81,7 +85,7 @@ export const fetchTopRatedMoviesApi = async (
 export type FetchTopRatedMoviesRequestResponse = PaginationResponse<Movie[]>;
 
 export const fetchTopRatedMoviesRequest = (
-  params?: PaginationApiParams
+  params?: FetchTopRatedMoviesApiParams
 ): Promise<FetchTopRatedMoviesRequestResponse> =>
   requestErrorMiddleware(
     fetchTopRatedMoviesApi(params).then(({ data }) =>
@@ -94,7 +98,8 @@ export const fetchTopRatedMoviesRequest = (
 
 export type SearchMoviesApiParams = {
   query: string;
-} & PaginationApiParams;
+} & PaginationApiParams &
+  LanguageApiParams;
 
 export const searchMoviesApi = async (
   params: SearchMoviesApiParams
@@ -119,16 +124,16 @@ export const searchMoviesRequest = (
 
 export type FetchRecommendationsMoviesApiParams = {
   movieId: MovieId;
-} & PaginationApiParams;
+} & PaginationApiParams &
+  LanguageApiParams;
 
-export const fetchRecommendationsMoviesApi = async ({
-  movieId,
-  page,
-}: FetchRecommendationsMoviesApiParams): Promise<AxiosResponse<unknown>> =>
+export const fetchRecommendationsMoviesApi = async (
+  params: FetchRecommendationsMoviesApiParams
+): Promise<AxiosResponse<unknown>> =>
   appAxiosInstance.get<unknown>(
-    ApiPaths.fetchRecommendationsMoviesApi(movieId),
+    ApiPaths.fetchRecommendationsMoviesApi(params.movieId),
     {
-      params: { page },
+      params,
     }
   );
 
@@ -148,15 +153,18 @@ export const fetchRecommendationsMoviesRequest = (
 
 export type FetchSimilarMoviesApiParams = {
   movieId: MovieId;
-} & PaginationApiParams;
+} & PaginationApiParams &
+  LanguageApiParams;
 
-export const fetchSimilarMoviesApi = async ({
-  movieId,
-  page,
-}: FetchSimilarMoviesApiParams): Promise<AxiosResponse<unknown>> =>
-  appAxiosInstance.get<unknown>(ApiPaths.fetchSimilarMoviesApi(movieId), {
-    params: { page },
-  });
+export const fetchSimilarMoviesApi = async (
+  params: FetchSimilarMoviesApiParams
+): Promise<AxiosResponse<unknown>> =>
+  appAxiosInstance.get<unknown>(
+    ApiPaths.fetchSimilarMoviesApi(params.movieId),
+    {
+      params,
+    }
+  );
 
 export type FetchSimilarMoviesResponse = PaginationResponse<Movie[]>;
 
@@ -181,7 +189,8 @@ export type DiscoverMovieApiParams = Partial<{
   with_genres: string;
   without_genres: string;
 }> &
-  PaginationApiParams;
+  PaginationApiParams &
+  LanguageApiParams;
 
 export const discoverMovieApi = async (
   params: DiscoverMovieApiParams

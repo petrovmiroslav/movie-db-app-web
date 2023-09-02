@@ -10,6 +10,7 @@ import {
   useSimilarMovies,
 } from "../../../features/movies/movies.hooks";
 import { useImageConfiguration } from "../../../features/configuration/configuration.hooks";
+import { useTranslation } from "next-i18next";
 
 type ContentProps = {
   backdrops: Image[] | undefined;
@@ -29,13 +30,15 @@ export const Content = React.memo<ContentProps>((props) => {
 
   const { secureBaseUrl, posterSizes, backdropSizes } = useImageConfiguration();
 
+  const { t } = useTranslation(["common", "movie"]);
+
   return (
     <section className={cn(commonCss.contentContainer, css.container)}>
       {tagline && <p className={css.tagline}>{tagline}</p>}
       {overview && <p className={css.overview}>{overview}</p>}
 
       <MovieImagesSlider
-        headerText="Posters"
+        headerText={t("posters.header", { ns: "movie" })}
         isPosters={true}
         title={title}
         baseUrl={secureBaseUrl}
@@ -44,7 +47,7 @@ export const Content = React.memo<ContentProps>((props) => {
       />
 
       <MovieImagesSlider
-        headerText="Backdrops"
+        headerText={t("backdrops.header", { ns: "movie" })}
         title={title}
         baseUrl={secureBaseUrl}
         sizesList={backdropSizes}
@@ -52,13 +55,13 @@ export const Content = React.memo<ContentProps>((props) => {
       />
 
       <SuggestedMoviesSlider
-        headerText="Recommendations"
+        headerText={t("recommendations.header", { ns: "movie" })}
         movieId={id}
         useMoviesQuery={useRecommendationsMovies}
       />
 
       <SuggestedMoviesSlider
-        headerText="Similar"
+        headerText={t("similar.header", { ns: "movie" })}
         movieId={id}
         useMoviesQuery={useSimilarMovies}
       />

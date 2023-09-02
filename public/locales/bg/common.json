@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "main": "Главна",
+    "search": "Търсене",
+    "favorites": "Любими",
+    "settings": "Настройки"
+  },
+  "components": {
+    "BackButton": {
+      "backButtonAriaLabel": "назад"
+    },
+    "FavoriteButton": {
+      "addToFavoritesAriaLabel": "добави към любими",
+      "removeFromFavoritesAriaLabel": "премахни от любими"
+    },
+    "TitleMovieCard": {
+      "title": "заглавие на филм"
+    }
+  },
+  "utils": {
+    "dates": {
+      "formatDurationToString": {
+        "hours": "ч",
+        "minutes": "м"
+      }
+    }
+  }
+}

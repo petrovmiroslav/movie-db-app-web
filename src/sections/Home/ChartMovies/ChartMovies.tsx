@@ -8,6 +8,7 @@ import {
   useTopRatedMovies,
 } from "../../../features/movies/movies.hooks";
 import uniqBy from "lodash/uniqBy";
+import { useRouter } from "next/router";
 
 export type ChartMoviesProps = {
   header: string;
@@ -17,7 +18,9 @@ export type ChartMoviesProps = {
 export const ChartMovies = React.memo<ChartMoviesProps>((props) => {
   const { header, useMoviesQuery } = props;
 
-  const { data, fetchNextPage } = useMoviesQuery();
+  const router = useRouter();
+
+  const { data, fetchNextPage } = useMoviesQuery({ language: router.locale });
 
   const moviesList = useMemo<Movie[] | undefined>(() => {
     const pages = data?.pages;

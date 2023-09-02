@@ -8,14 +8,17 @@ import React from "react";
 import { DehydratedState } from "@tanstack/query-core";
 import { isResponseError, toErrorWithMessage } from "./errors";
 import { AxiosResponse } from "axios";
-import { getSafeResponseError } from "./api";
+import { appAxiosInstance, getSafeResponseError } from "./api/api";
+import { I18nextSSRConfig } from "./i18n/i18n";
+import { GetStaticProps } from "next/types";
 
 export interface PageProps {}
 
-export interface AppProps extends PageProps {
+export interface AppProps extends PageProps, I18nextSSRConfig {
   queryClientDehydratedState?: DehydratedState;
 }
 
+export type GetStaticPropsType = GetStaticProps<AppProps>;
 export type GetServerSidePropsType = GetServerSideProps<AppProps>;
 
 type GetLayout = (page: React.ReactElement) => React.ReactNode;
@@ -43,5 +46,35 @@ export const apiHandlerWrap = async (
     }
 
     res.status(500).json(toErrorWithMessage(getSafeResponseError(error)));
+  }
+};
+
+export const passRequest = (
+  req: NextApiRequest
+): Promise<AxiosResponse<unknown, unknown>> => {
+  if (!req.method) throw new Error("invalid request method");
+  if (!req.url) throw new Error("invalid request url");
+
+  const apiPrefix = "/api";
+  if (req.url.startsWith(apiPrefix)) {
+    req.url = req.url.substring(apiPrefix.length);
+  }
+
+  const methodLowerCase = req.method.toLowerCase();
+
+  switch (methodLowerCase) {
+    case "get":
+    case "delete": {
+      return appAxiosInstance[methodLowerCase](req.url);
+    }
+    case "post":
+    case "put":
+    case "patch": {
+      return appAxiosInstance[methodLowerCase](req.url, req.body);
+    }
+
+    default: {
+      return appAxiosInstance.request({ ...req });
+    }
   }
 };

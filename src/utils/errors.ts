@@ -1,4 +1,4 @@
-import { ResponseError } from "./api";
+import { ResponseError } from "./api/api";
 
 export type ErrorWithMessage = {
   message: string;

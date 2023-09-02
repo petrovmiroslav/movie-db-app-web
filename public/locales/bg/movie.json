@@ -1,0 +1,14 @@
+{
+  "posters": {
+    "header": "Плакати"
+  },
+  "backdrops": {
+    "header": "Изображения"
+  },
+  "recommendations": {
+    "header": "Препоръки"
+  },
+  "similar": {
+    "header": "Подобни"
+  }
+}

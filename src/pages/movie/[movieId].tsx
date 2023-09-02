@@ -10,10 +10,11 @@ import { moviesQueries } from "../../features/movies/movies.queries";
 import { configurationQueries } from "../../features/configuration/configuration.queries";
 import { Hero } from "../../sections/Movie/Hero/Hero";
 import { Content } from "../../sections/Movie/Content/Content";
-import css from "../../sections/Movie/Movie.module.scss";
 import { Header } from "../../sections/Movie/Header/Header";
 import { throttle } from "../../utils/functions";
 import { genresQueries } from "../../features/genres/genres.queries";
+import { getServerSideTranslations } from "../../utils/i18n/i18n";
+import css from "../../sections/Movie/Movie.module.scss";
 
 const getScrollY = () => (typeof window !== "undefined" ? window.scrollY : 0);
 
@@ -29,13 +30,21 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
   await Promise.allSettled([
     queryClient.prefetchQuery(configurationQueries.configuration),
     queryClient.prefetchQuery(
-      moviesQueries.movie({ movieId, includes: [AppendToResponse.IMAGES] })
+      moviesQueries.movie({
+        movieId,
+        language: context.locale,
+        includes: [AppendToResponse.IMAGES],
+      })
     ),
     queryClient.prefetchInfiniteQuery(
-      moviesQueries.recommendations({ movieId })
+      moviesQueries.recommendations({ movieId, language: context.locale })
     ),
-    queryClient.prefetchInfiniteQuery(moviesQueries.similar({ movieId })),
-    queryClient.prefetchQuery(genresQueries.movie),
+    queryClient.prefetchInfiniteQuery(
+      moviesQueries.similar({ movieId, language: context.locale })
+    ),
+    queryClient.prefetchQuery(
+      genresQueries.movie({ language: context.locale })
+    ),
   ]);
 
   const queryClientDehydratedState = JSON.parse(
@@ -44,6 +53,10 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   return {
     props: {
+      ...(await getServerSideTranslations({
+        locale: context.locale,
+        ns: ["movie"],
+      })),
       queryClientDehydratedState,
     },
   };
@@ -57,7 +70,11 @@ const Movie: PageWithLayout = () => {
   const movieId = Number(movieIdQueryParam) as MovieId;
 
   const { data: movieData } = useQuery(
-    moviesQueries.movie({ movieId, includes: [AppendToResponse.IMAGES] })
+    moviesQueries.movie({
+      movieId,
+      language: router.locale,
+      includes: [AppendToResponse.IMAGES],
+    })
   );
 
   const {

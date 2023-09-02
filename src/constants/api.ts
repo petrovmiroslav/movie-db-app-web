@@ -1,11 +1,11 @@
 import { MovieId } from "../features/movies/movies.types";
+import { Languages } from "../utils/i18n/constants";
 
-export enum ApiParamLanguages {
-  EN = "en",
-  NULL = "null",
-}
+export type LanguageApiParams = {
+  language: string | undefined;
+};
 
-export const DEFAULT_INCLUDE_LANGUAGE_PARAM = `${ApiParamLanguages.EN},${ApiParamLanguages.NULL}`;
+export const DEFAULT_INCLUDE_LANGUAGE_PARAM = `${Languages.EN},null`;
 
 export enum ApiSortByParamValue {
   POPULARITY_ASC = "popularity.asc",

@@ -18,6 +18,8 @@ import { GenresDictContextProvider } from "../features/genres/genres.contexts";
 import { WindowSizeContextProvider } from "../hooks/useWindowSize";
 import { HeaderHeightContextProvider } from "../hooks/useHeaderHeight";
 import { AppHead } from "../components/AppHead/AppHead";
+import { appWithTranslation } from "next-i18next";
+import { queryClientConfig } from "../utils/api/reactQuery";
 
 type CommonAppProps = {
   children: React.ReactNode;
@@ -55,7 +57,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   const { queryClientDehydratedState, ...restPageProps } = pageProps;
 
-  const [queryClient] = React.useState(() => new QueryClient());
+  const [queryClient] = React.useState(
+    () =>
+      new QueryClient({
+        defaultOptions: { ...queryClientConfig },
+      })
+  );
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -67,4 +74,4 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 };
 
 // noinspection JSUnusedGlobalSymbols
-export default App;
+export default appWithTranslation(App);

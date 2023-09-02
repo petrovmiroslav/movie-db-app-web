@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "main": "Hoofdmenu",
+    "search": "Zoeken",
+    "favorites": "Favorieten",
+    "settings": "Instellingen"
+  },
+  "components": {
+    "BackButton": {
+      "backButtonAriaLabel": "terug knop"
+    },
+    "FavoriteButton": {
+      "addToFavoritesAriaLabel": "toevoegen aan favorieten",
+      "removeFromFavoritesAriaLabel": "Verwijder van favorieten"
+    },
+    "TitleMovieCard": {
+      "title": "film titel"
+    }
+  },
+  "utils": {
+    "dates": {
+      "formatDurationToString": {
+        "hours": "u",
+        "minutes": "m"
+      }
+    }
+  }
+}

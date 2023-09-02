@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "main": "Hoved",
+    "search": "Søg",
+    "favorites": "Foretrukne",
+    "settings": "Indstillinger"
+  },
+  "components": {
+    "BackButton": {
+      "backButtonAriaLabel": "tilbage"
+    },
+    "FavoriteButton": {
+      "addToFavoritesAriaLabel": "Tilføj til favoritter",
+      "removeFromFavoritesAriaLabel": "fjerne fra favoritter"
+    },
+    "TitleMovieCard": {
+      "title": "film titel"
+    }
+  },
+  "utils": {
+    "dates": {
+      "formatDurationToString": {
+        "hours": "t",
+        "minutes": "m"
+      }
+    }
+  }
+}

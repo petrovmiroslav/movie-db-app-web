@@ -12,6 +12,7 @@
 - e2e tests (Playwright)
 - deployment to Vercel
 - sensitive information security (environment variables)
+- i18n
 
 ### Lighthouse reports
 - Home page mobile

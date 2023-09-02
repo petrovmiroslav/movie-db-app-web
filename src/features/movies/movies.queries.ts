@@ -4,63 +4,65 @@ import {
   discoverMovieRequest,
   FetchMovieApiParams,
   fetchMovieRequest,
+  FetchPopularMoviesApiParams,
   fetchPopularMoviesRequest,
   FetchRecommendationsMoviesApiParams,
   fetchRecommendationsMoviesRequest,
   FetchSimilarMoviesApiParams,
   fetchSimilarMoviesRequest,
+  FetchTopRatedMoviesApiParams,
   fetchTopRatedMoviesRequest,
   SearchMoviesApiParams,
   searchMoviesRequest,
 } from "./movies.api";
 
 export const moviesQueries = createQueryKeys("movie", {
-  movie: (params: Partial<FetchMovieApiParams>) => {
-    const { movieId, ...restParams } = params;
+  movie: (params: FetchMovieApiParams | null) => {
     return {
-      queryKey: [movieId ?? {}],
+      queryKey: [params ?? {}],
       queryFn: () =>
-        movieId ? fetchMovieRequest({ movieId, ...restParams }) : undefined,
-      enabled: Boolean(movieId),
+        params
+          ? fetchMovieRequest(params)
+          : Promise.reject(new Error("Invalid params")),
     };
   },
-  popular: {
-    queryKey: null,
-    queryFn: (ctx) => fetchPopularMoviesRequest({ page: ctx?.pageParam ?? 1 }),
-  },
-  topRated: {
-    queryKey: null,
-    queryFn: (ctx) => fetchTopRatedMoviesRequest({ page: ctx?.pageParam ?? 1 }),
-  },
-  search: ({ query }: SearchMoviesApiParams) => ({
-    queryKey: [{ query }],
+  popular: (params: FetchPopularMoviesApiParams) => ({
+    queryKey: [params],
     queryFn: (ctx) =>
-      query
-        ? searchMoviesRequest({ query, page: ctx?.pageParam ?? 1 })
-        : undefined,
+      fetchPopularMoviesRequest({ ...params, page: ctx?.pageParam ?? 1 }),
+  }),
+  topRated: (params: FetchTopRatedMoviesApiParams) => ({
+    queryKey: [params],
+    queryFn: (ctx) =>
+      fetchTopRatedMoviesRequest({ ...params, page: ctx?.pageParam ?? 1 }),
+  }),
+  search: (params: SearchMoviesApiParams | null) => ({
+    queryKey: [params ?? {}],
+    queryFn: (ctx) =>
+      params
+        ? searchMoviesRequest({ ...params, page: ctx?.pageParam ?? 1 })
+        : Promise.reject(new Error("Invalid params")),
   }),
   discover: (params: DiscoverMovieApiParams) => ({
     queryKey: [params],
     queryFn: (ctx) =>
       discoverMovieRequest({ ...params, page: ctx?.pageParam ?? 1 }),
   }),
-  recommendations: ({
-    movieId,
-  }: Partial<FetchRecommendationsMoviesApiParams>) => ({
-    queryKey: [{ movieId }],
+  recommendations: (params: FetchRecommendationsMoviesApiParams | null) => ({
+    queryKey: [params ?? {}],
     queryFn: (ctx) =>
-      movieId
+      params
         ? fetchRecommendationsMoviesRequest({
-            movieId,
+            ...params,
             page: ctx?.pageParam ?? 1,
           })
-        : undefined,
+        : Promise.reject(new Error("Invalid params")),
   }),
-  similar: ({ movieId }: Partial<FetchSimilarMoviesApiParams>) => ({
-    queryKey: [{ movieId }],
+  similar: (params: FetchSimilarMoviesApiParams | null) => ({
+    queryKey: [params ?? {}],
     queryFn: (ctx) =>
-      movieId
-        ? fetchSimilarMoviesRequest({ movieId, page: ctx?.pageParam ?? 1 })
-        : undefined,
+      params
+        ? fetchSimilarMoviesRequest({ ...params, page: ctx?.pageParam ?? 1 })
+        : Promise.reject(new Error("Invalid params")),
   }),
 });

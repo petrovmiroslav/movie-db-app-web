@@ -18,11 +18,12 @@ import { useQuery } from "@tanstack/react-query";
 import { moviesQueries } from "../../../../features/movies/movies.queries";
 import { AppendToResponse } from "../../../../features/movies/movies.api";
 import { MovieId } from "../../../../features/movies/movies.types";
-import css from "./FavoriteItem.module.scss";
 import { typeCheckers } from "../../../../utils/types";
+import css from "./FavoriteItem.module.scss";
 
 type FavoriteItemProps = {
   className?: string;
+  locale: string | undefined;
 } & Favorite &
   Pick<MovieCardHorizontalProps, "baseUrl" | "sizesList" | "priority">;
 
@@ -32,7 +33,11 @@ export const FavoriteItem = React.memo<FavoriteItemProps>((props) => {
   const movieId = Number(entityId) as MovieId;
 
   const { data: movieData } = useQuery(
-    moviesQueries.movie({ movieId, includes: [AppendToResponse.IMAGES] })
+    moviesQueries.movie({
+      movieId,
+      includes: [AppendToResponse.IMAGES],
+      language: props.locale,
+    })
   );
 
   const {

@@ -13,9 +13,10 @@ import { InView } from "react-intersection-observer";
 import { Movie } from "../features/movies/movies.types";
 import { Results } from "../sections/Search/Results/Results";
 import uniqBy from "lodash/uniqBy";
-import css from "../sections/Search/Search.module.scss";
 import { Header } from "../sections/Search/Header/Header";
 import { genresQueries } from "../features/genres/genres.queries";
+import { getServerSideTranslations } from "../utils/i18n/i18n";
+import css from "../sections/Search/Search.module.scss";
 
 const debounceQueryDelay = 500;
 
@@ -29,8 +30,13 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   await Promise.allSettled([
     queryClient.prefetchQuery(configurationQueries.configuration),
-    queryClient.prefetchInfiniteQuery(moviesQueries.search({ query: qParam })),
-    queryClient.prefetchQuery(genresQueries.movie),
+    qParam &&
+      queryClient.prefetchInfiniteQuery(
+        moviesQueries.search({ query: qParam, language: context.locale })
+      ),
+    queryClient.prefetchQuery(
+      genresQueries.movie({ language: context.locale })
+    ),
   ]);
 
   const queryClientDehydratedState = JSON.parse(
@@ -39,6 +45,10 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   return {
     props: {
+      ...(await getServerSideTranslations({
+        locale: context.locale,
+        ns: ["search"],
+      })),
       queryClientDehydratedState,
     },
   };
@@ -59,12 +69,10 @@ const Search: PageWithLayout = () => {
   const queryParam = !isTransitioning ? debouncedQuery : "";
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    ...moviesQueries.search({ query: queryParam }),
+    ...moviesQueries.search({ query: queryParam, language: router.locale }),
     getNextPageParam: getNextPageNumber,
+    enabled: Boolean(queryParam),
   });
-
-  // const isPreloaderShown =
-  //   (trimmedQueryInputValue && isTransitioning) || isLoading;
 
   const moviesList = useMemo<Movie[] | undefined>(() => {
     const pages = data?.pages;

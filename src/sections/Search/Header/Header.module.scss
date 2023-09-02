@@ -9,18 +9,18 @@
 }
 
 .clearButton {
-  width: 0;
+  max-width: 0;
   flex-shrink: 0;
   position: relative;
   border-radius: var(--dp__8);
   white-space: nowrap;
   overflow: hidden;
   opacity: 0;
-  transition: width 0.15s ease-in-out, opacity 0.05s ease-in-out;
+  transition: max-width 0.15s ease-in-out, opacity 0.05s ease-in-out;
 }
 
 .clearButton__expanded {
-  width: 5.1rem;
+  max-width: 30%;
   opacity: 1;
 }
 

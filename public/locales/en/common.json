@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "main": "Main",
+    "search": "Search",
+    "favorites": "Favorites",
+    "settings": "Settings"
+  },
+  "components": {
+    "BackButton": {
+      "backButtonAriaLabel": "go back"
+    },
+    "FavoriteButton": {
+      "addToFavoritesAriaLabel": "add to favorites",
+      "removeFromFavoritesAriaLabel": "remove from favorites"
+    },
+    "TitleMovieCard": {
+      "title": "movie title"
+    }
+  },
+  "utils": {
+    "dates": {
+      "formatDurationToString": {
+        "hours": "h",
+        "minutes": "m"
+      }
+    }
+  }
+}

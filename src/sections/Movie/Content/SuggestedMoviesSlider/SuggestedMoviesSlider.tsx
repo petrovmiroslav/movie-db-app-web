@@ -8,6 +8,7 @@ import {
 } from "../../../../features/movies/movies.hooks";
 import css from "./SuggestedMoviesSlider.module.scss";
 import uniqBy from "lodash/uniqBy";
+import { useRouter } from "next/router";
 
 type SuggestedMoviesSliderProps = {
   headerText: string;
@@ -18,8 +19,12 @@ type SuggestedMoviesSliderProps = {
 export const SuggestedMoviesSlider = React.memo<SuggestedMoviesSliderProps>(
   (props) => {
     const { headerText, movieId, useMoviesQuery } = props;
+    const router = useRouter();
 
-    const { data, fetchNextPage } = useMoviesQuery(movieId);
+    const { data, fetchNextPage } = useMoviesQuery({
+      movieId,
+      language: router.locale,
+    });
 
     const moviesList = useMemo<Movie[] | undefined>(() => {
       const pages = data?.pages;

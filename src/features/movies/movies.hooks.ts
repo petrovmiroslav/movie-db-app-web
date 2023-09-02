@@ -1,28 +1,35 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { moviesQueries } from "./movies.queries";
 import { getNextPageNumber } from "../../utils/pagination";
-import { MovieId } from "./movies.types";
 
-export const usePopularMovies = () =>
+export const usePopularMovies = (
+  params: Parameters<typeof moviesQueries.popular>[0]
+) =>
   useInfiniteQuery({
-    ...moviesQueries.popular,
+    ...moviesQueries.popular(params),
     getNextPageParam: getNextPageNumber,
   });
 
-export const useTopRatedMovies = () =>
+export const useTopRatedMovies = (
+  params: Parameters<typeof moviesQueries.topRated>[0]
+) =>
   useInfiniteQuery({
-    ...moviesQueries.topRated,
+    ...moviesQueries.topRated(params),
     getNextPageParam: getNextPageNumber,
   });
 
-export const useRecommendationsMovies = (movieId: MovieId) =>
+export const useRecommendationsMovies = (
+  params: Parameters<typeof moviesQueries.recommendations>[0]
+) =>
   useInfiniteQuery({
-    ...moviesQueries.recommendations({ movieId }),
+    ...moviesQueries.recommendations(params),
     getNextPageParam: getNextPageNumber,
   });
 
-export const useSimilarMovies = (movieId: MovieId) =>
+export const useSimilarMovies = (
+  params: Parameters<typeof moviesQueries.similar>[0]
+) =>
   useInfiniteQuery({
-    ...moviesQueries.similar({ movieId }),
+    ...moviesQueries.similar(params),
     getNextPageParam: getNextPageNumber,
   });

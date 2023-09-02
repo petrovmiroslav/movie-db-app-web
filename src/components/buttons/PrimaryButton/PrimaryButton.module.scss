@@ -1,0 +1,13 @@
+.button {
+  --focus-visible-outline-color: var(--colors__background_very_dark);
+
+  display: flex;
+  padding: var(--dp__12) var(--dp__24);
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  border-radius: var(--dp__8);
+  background-color: var(--colors__primary);
+  color: var(--colors__background_light);
+  box-shadow: var(--shadow__2dp);
+}

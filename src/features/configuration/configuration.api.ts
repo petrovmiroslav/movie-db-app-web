@@ -1,4 +1,4 @@
-import { appAxiosInstance, requestErrorMiddleware } from "../../utils/api";
+import { appAxiosInstance, requestErrorMiddleware } from "../../utils/api/api";
 import { Configuration, ConfigurationDtoSchema } from "./configuration.types";
 import { configurationDtoMapper } from "./configuration.mappers";
 import { AxiosResponse } from "axios";

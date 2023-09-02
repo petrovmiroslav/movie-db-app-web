@@ -1,0 +1,11 @@
+{
+  "popular": {
+    "header": "Popularne"
+  },
+  "topRated": {
+    "header": "Najwyżej oceniane"
+  },
+  "genres": {
+    "header": "Gatunki"
+  }
+}

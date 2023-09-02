@@ -15,8 +15,10 @@ import { Movie } from "../features/movies/movies.types";
 import { Results } from "../sections/Discover/Results/Results";
 import { InView } from "react-intersection-observer";
 import uniqBy from "lodash/uniqBy";
-import css from "../sections/Discover/Discover.module.scss";
 import { genresQueries } from "../features/genres/genres.queries";
+import { getServerSideTranslations } from "../utils/i18n/i18n";
+import { useTranslation } from "next-i18next";
+import css from "../sections/Discover/Discover.module.scss";
 
 const debounceQueryDelay = 800;
 
@@ -28,8 +30,12 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   await Promise.allSettled([
     queryClient.prefetchQuery(configurationQueries.configuration),
-    queryClient.prefetchInfiniteQuery(moviesQueries.discover(query)),
-    queryClient.prefetchQuery(genresQueries.movie),
+    queryClient.prefetchInfiniteQuery(
+      moviesQueries.discover({ ...query, language: context.locale })
+    ),
+    queryClient.prefetchQuery(
+      genresQueries.movie({ language: context.locale })
+    ),
   ]);
 
   const queryClientDehydratedState = JSON.parse(
@@ -38,6 +44,10 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   return {
     props: {
+      ...(await getServerSideTranslations({
+        locale: context.locale,
+        ns: ["discover"],
+      })),
       queryClientDehydratedState,
     },
   };
@@ -45,21 +55,20 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
 const Discover: PageWithLayout = () => {
   const router = useRouter();
+  const { t } = useTranslation(["common", "discover"]);
 
   const initialParamsFromQuery = router.query; //todo number !== string ({gte: '8'})
 
-  const [discoverParams] = useState<DiscoverMovieApiParams>(
+  const [discoverParams] = useState<Omit<DiscoverMovieApiParams, "language">>(
     initialParamsFromQuery
   );
 
   const debouncedQuery = useDebouncedValue(discoverParams, debounceQueryDelay);
 
   const { data, fetchNextPage } = useInfiniteQuery({
-    ...moviesQueries.discover(debouncedQuery),
+    ...moviesQueries.discover({ ...debouncedQuery, language: router.locale }),
     getNextPageParam: getNextPageNumber,
   });
-
-  // const isPreloaderShown = isLoading;
 
   const moviesList = useMemo<Movie[] | undefined>(() => {
     const pages = data?.pages;
@@ -88,7 +97,9 @@ const Discover: PageWithLayout = () => {
 
   return (
     <div className={css.container}>
-      <PageHeader withBackButton={true}>Discover</PageHeader>
+      <PageHeader withBackButton={true}>
+        {t("header", { ns: "discover" })}
+      </PageHeader>
 
       <Results moviesList={moviesList} />
       <InView

@@ -1,10 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { apiHandlerWrap } from "../../../../utils/next";
-import { fetchGenresApi } from "../../../../features/genres/genres.api";
+import { apiHandlerWrap, passRequest } from "../../../../utils/next";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  return apiHandlerWrap(req, res, fetchGenresApi());
-};
+const handler = async (req: NextApiRequest, res: NextApiResponse) =>
+  apiHandlerWrap(req, res, passRequest(req));
 
 // noinspection JSUnusedGlobalSymbols
 export default handler;

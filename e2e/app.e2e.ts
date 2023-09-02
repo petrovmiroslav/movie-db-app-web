@@ -1,17 +1,17 @@
-import { test, expect, Page } from "@playwright/test";
-import {
-  MOVIE_PAGE_TITLE_TEST_ID,
-  TITLE_MOVIE_CARD_TITLE_ATTRIBUTE_VALUE,
-} from "../src/constants/e2e";
+import { expect, Page, test } from "@playwright/test";
+import { MOVIE_PAGE_TITLE_TEST_ID } from "../src/constants/e2e";
+import { i18Resources } from "../@types/i18next";
 
 const clickOnFirstMovieCardAndCheckMoviePageTitle = async (page: Page) => {
+  const elementTitle = i18Resources.common.components.TitleMovieCard.title;
+
   const movieCard = await page
     .getByRole("link")
-    .filter({ has: page.getByTitle(TITLE_MOVIE_CARD_TITLE_ATTRIBUTE_VALUE) })
+    .filter({ has: page.getByTitle(elementTitle) })
     .first();
 
   const movieCardTitle = await movieCard
-    .getByTitle(TITLE_MOVIE_CARD_TITLE_ATTRIBUTE_VALUE)
+    .getByTitle(elementTitle)
     .first()
     .textContent();
 
@@ -40,7 +40,9 @@ test(
     await page.goto("/");
 
     const navigation = await page.getByRole("navigation");
-    const searchLink = await navigation.getByText("Search");
+    const searchLink = await navigation.getByText(
+      i18Resources.common.tabs.search
+    );
 
     await searchLink.click();
 

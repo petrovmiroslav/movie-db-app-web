@@ -1,7 +1,6 @@
 import React from "react";
 import { cn, commonCss } from "../../../utils/styles";
 import { Icons } from "../../Icons/Icons";
-import css from "./FavoriteButton.module.scss";
 import { MovieId } from "../../../features/movies/movies.types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -11,9 +10,10 @@ import {
 import { favoritesQueries } from "../../../features/favorites/favorites.queries";
 import { FavoritesTypes } from "../../../features/favorites/favorites.types";
 import { useFavoritesDict } from "../../../features/favorites/favorites.hooks";
+import { Button } from "../Button/Button";
+import { useTranslation } from "next-i18next";
+import css from "./FavoriteButton.module.scss";
 
-export const DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT = "add to favorites";
-export const DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT = "remove from favorites";
 export const EMPTY_ICON_TEST_ID = "FavoriteButton__EMPTY_ICON_TEST_ID";
 export const FILLED_ICON_TEST_ID = "FavoriteButton__FILLED_ICON_TEST_ID";
 
@@ -26,6 +26,7 @@ export const FavoriteButton = React.memo<FavoriteButtonProps>((props) => {
   const { movieId, className } = props;
 
   const queryClient = useQueryClient();
+  const { t } = useTranslation(["common"]);
 
   const favoritesDict = useFavoritesDict();
   const favoriteId = favoritesDict?.[movieId]?.id;
@@ -53,12 +54,12 @@ export const FavoriteButton = React.memo<FavoriteButtonProps>((props) => {
   };
 
   return (
-    <button
-      className={cn(commonCss.interactive, css.button, className)}
+    <Button
+      className={cn(css.button, className)}
       aria-label={
         isFavorite
-          ? DEFAULT_REMOVE_FROM_FAVORITES_LABEL_TEXT
-          : DEFAULT_ADD_TO_FAVORITES_LABEL_TEXT
+          ? t("components.FavoriteButton.removeFromFavoritesAriaLabel")
+          : t("components.FavoriteButton.addToFavoritesAriaLabel")
       }
       onClick={onClickHandler}
     >
@@ -70,7 +71,7 @@ export const FavoriteButton = React.memo<FavoriteButtonProps>((props) => {
         data-testid={FILLED_ICON_TEST_ID}
         className={cn(commonCss.absoluteCenter, !isFavorite && css.icon_hidden)}
       />
-    </button>
+    </Button>
   );
 });
 

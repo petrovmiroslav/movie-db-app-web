@@ -1,0 +1,28 @@
+{
+  "tabs": {
+    "main": "Główna",
+    "search": "Szukaj",
+    "favorites": "Ulubione",
+    "settings": "Ustawienia"
+  },
+  "components": {
+    "BackButton": {
+      "backButtonAriaLabel": "powrotu"
+    },
+    "FavoriteButton": {
+      "addToFavoritesAriaLabel": "Dodaj do ulubionych",
+      "removeFromFavoritesAriaLabel": "Usuń z ulubionych"
+    },
+    "TitleMovieCard": {
+      "title": "tytuł filmu"
+    }
+  },
+  "utils": {
+    "dates": {
+      "formatDurationToString": {
+        "hours": "g",
+        "minutes": "m"
+      }
+    }
+  }
+}

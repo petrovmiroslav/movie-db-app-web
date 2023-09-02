@@ -1,9 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchConfigurationApi } from "../../features/configuration/configuration.api";
-import { apiHandlerWrap } from "../../utils/next";
+import { apiHandlerWrap, passRequest } from "../../utils/next";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  return apiHandlerWrap(req, res, fetchConfigurationApi());
+  return apiHandlerWrap(req, res, passRequest(req));
 };
 
 export default handler;

@@ -1,3 +1,5 @@
+const { i18n } = require("../../next-i18next.config.js");
+
 export const config = {
   MODE: process.env.NODE_ENV,
   IS_DEV: process.env.NODE_ENV === "development",
@@ -8,6 +10,7 @@ export const config = {
   REACT_QUERY_DEVTOOLS_INITIAL_OPEN: Boolean(
     process.env.NEXT_PUBLIC_REACT_QUERY_DEVTOOLS_INITIAL_OPEN
   ),
+  DEFAULT_LOCALE: i18n.defaultLocale,
 };
 
 config.IS_DEV &&

@@ -3,6 +3,7 @@ import { useImageConfiguration } from "../../../features/configuration/configura
 import { FavoriteItem } from "./FavoriteItem/FavoriteItem";
 import { Favorite } from "../../../features/favorites/favorites.types";
 import { cn, commonCss } from "../../../utils/styles";
+import { useRouter } from "next/router";
 import css from "./FavoriteList.module.scss";
 
 type FavoriteListProps = {
@@ -10,19 +11,20 @@ type FavoriteListProps = {
 };
 
 export const FavoriteList = React.memo<FavoriteListProps>((props) => {
-  const { favoriteList } = props;
+  const router = useRouter();
 
   const { secureBaseUrl, posterSizes } = useImageConfiguration();
 
   return (
     <section className={cn(commonCss.contentContainer, css.container)}>
-      {favoriteList?.map((movie, index) => (
+      {props.favoriteList?.map((movie, index) => (
         <FavoriteItem
           key={movie.id}
           className={css.item}
           baseUrl={secureBaseUrl}
           sizesList={posterSizes}
           priority={index < 4}
+          locale={router.locale}
           {...movie}
         />
       ))}

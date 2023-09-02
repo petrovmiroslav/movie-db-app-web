@@ -1,0 +1,11 @@
+{
+  "popular": {
+    "header": "Популярные"
+  },
+  "topRated": {
+    "header": "Лучший рейтинг"
+  },
+  "genres": {
+    "header": "Жанры"
+  }
+}

@@ -12,17 +12,25 @@ import {
   useTopRatedMovies,
 } from "../features/movies/movies.hooks";
 import { GenresSlider } from "../sections/Home/GenresSlider/GenresSlider";
+import { useTranslation } from "next-i18next";
+import { getServerSideTranslations } from "../utils/i18n/i18n";
 import css from "../sections/Home/Home.module.scss";
 
 // noinspection JSUnusedGlobalSymbols
-export const getServerSideProps: GetServerSidePropsType = async () => {
+export const getServerSideProps: GetServerSidePropsType = async (context) => {
   const queryClient = new QueryClient();
 
   await Promise.allSettled([
     queryClient.prefetchQuery(configurationQueries.configuration),
-    queryClient.prefetchInfiniteQuery(moviesQueries.popular),
-    queryClient.prefetchInfiniteQuery(moviesQueries.topRated),
-    queryClient.prefetchQuery(genresQueries.movie),
+    queryClient.prefetchInfiniteQuery(
+      moviesQueries.popular({ language: context.locale })
+    ),
+    queryClient.prefetchInfiniteQuery(
+      moviesQueries.topRated({ language: context.locale })
+    ),
+    queryClient.prefetchQuery(
+      genresQueries.movie({ language: context.locale })
+    ),
   ]);
 
   const queryClientDehydratedState = JSON.parse(
@@ -31,18 +39,30 @@ export const getServerSideProps: GetServerSidePropsType = async () => {
 
   return {
     props: {
+      ...(await getServerSideTranslations({
+        locale: context.locale,
+        ns: ["home"],
+      })),
       queryClientDehydratedState,
     },
   };
 };
 
 const Home: PageWithLayout = () => {
+  const { t } = useTranslation(["common", "home"]);
+
   return (
     <div className={css.container}>
-      <PageHeader>Home</PageHeader>
+      <PageHeader>{t("tabs.main")}</PageHeader>
 
-      <ChartMovies header="Popular" useMoviesQuery={usePopularMovies} />
-      <ChartMovies header="Top rated" useMoviesQuery={useTopRatedMovies} />
+      <ChartMovies
+        header={t("popular.header", { ns: "home" })}
+        useMoviesQuery={usePopularMovies}
+      />
+      <ChartMovies
+        header={t("topRated.header", { ns: "home" })}
+        useMoviesQuery={useTopRatedMovies}
+      />
 
       <GenresSlider />
     </div>

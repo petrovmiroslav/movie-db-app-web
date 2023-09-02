@@ -1,4 +1,4 @@
-import { requestErrorMiddleware } from "../../utils/api";
+import { requestErrorMiddleware } from "../../utils/api/api";
 import {
   Favorite,
   FavoriteDto,

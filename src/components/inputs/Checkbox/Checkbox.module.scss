@@ -1,0 +1,31 @@
+.container {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+
+.label {
+  display: inline-block;
+  width: var(--dp__24);
+  height: var(--dp__24);
+  position: relative;
+  border-radius: 50%;
+  border: 0.2rem solid var(--colors__primary);
+
+  input:focus-visible + & {
+    box-shadow: inset 0 0 0 2px var(--colors__primary);
+    outline: 0;
+  }
+
+  input:checked + &:before {
+    content: "";
+    display: block;
+    width: 60%;
+    height: 60%;
+    margin: auto;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--colors__primary);
+  }
+}

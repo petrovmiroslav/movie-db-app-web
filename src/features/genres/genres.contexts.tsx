@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { Genre } from "./genres.types";
 import { useQuery } from "@tanstack/react-query";
 import { genresQueries } from "./genres.queries";
+import { useRouter } from "next/router";
 
 export type GenresDict = {
   [key: Genre["id"]]: Genre | undefined;
@@ -24,8 +25,11 @@ export const GenresDictContextProvider = (props: {
   children: React.ReactNode;
 }) => {
   const { children } = props;
+  const router = useRouter();
 
-  const { data: genreList } = useQuery(genresQueries.movie);
+  const { data: genreList } = useQuery(
+    genresQueries.movie({ language: router.locale })
+  );
 
   const genresDict = useMemo(() => createGenresDict(genreList), [genreList]);
 

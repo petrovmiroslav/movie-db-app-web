@@ -1,0 +1,14 @@
+{
+  "posters": {
+    "header": "Poster"
+  },
+  "backdrops": {
+    "header": "Hintergründe"
+  },
+  "recommendations": {
+    "header": "Empfehlungen"
+  },
+  "similar": {
+    "header": "Ähnlich"
+  }
+}
