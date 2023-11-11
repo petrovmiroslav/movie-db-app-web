@@ -14,6 +14,7 @@ import {
 import { GenresSlider } from "../sections/Home/GenresSlider/GenresSlider";
 import { useTranslation } from "next-i18next";
 import { getServerSideTranslations } from "../utils/i18n/i18n";
+import { getThemeFromCookiesSSR } from "../features/theme/utils/utils";
 import css from "../sections/Home/Home.module.scss";
 
 // noinspection JSUnusedGlobalSymbols
@@ -44,6 +45,7 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
         ns: ["home"],
       })),
       queryClientDehydratedState,
+      themeSetting: getThemeFromCookiesSSR(context.req.cookies),
     },
   };
 };

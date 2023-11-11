@@ -20,6 +20,10 @@
     color: var(--colors__font_light);
     opacity: 1;
   }
+
+  :global(.dark) & {
+    background-color: var(--colors__background_very_dark);
+  }
 }
 
 .input_withLeftIcon {

@@ -11,11 +11,13 @@ import { AxiosResponse } from "axios";
 import { appAxiosInstance, getSafeResponseError } from "./api/api";
 import { I18nextSSRConfig } from "./i18n/i18n";
 import { GetStaticProps } from "next/types";
+import { ThemesSettings } from "../features/theme/constants";
 
 export interface PageProps {}
 
 export interface AppProps extends PageProps, I18nextSSRConfig {
   queryClientDehydratedState?: DehydratedState;
+  themeSetting: ThemesSettings | null;
 }
 
 export type GetStaticPropsType = GetStaticProps<AppProps>;

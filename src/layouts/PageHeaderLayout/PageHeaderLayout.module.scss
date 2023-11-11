@@ -17,4 +17,8 @@
 .background {
   background-color: var(--colors__background_light);
   z-index: -1;
+
+  :global(.dark) & {
+    background-color: var(--colors__background_dark);
+  }
 }

@@ -5,8 +5,9 @@ import { cn, commonCss } from "../../../utils/styles";
 import { SectionHeader } from "../../../components/headers/SectionHeader/SectionHeader";
 import { LanguageListItem } from "./LanguageListItem/LanguageListItem";
 import { PrimaryButton } from "../../../components/buttons/PrimaryButton/PrimaryButton";
-import css from "./Language.module.scss";
 import { useTranslation } from "next-i18next";
+import { CookiesKeys, setClientCookies } from "../../../utils/cookies/cookies";
+import css from "./Language.module.scss";
 
 export const Language = React.memo(() => {
   const router = useRouter();
@@ -27,7 +28,7 @@ export const Language = React.memo(() => {
   const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    document.cookie = `NEXT_LOCALE=${selectedLocale}; path=/; samesite=Lax; secure`;
+    setClientCookies({ key: CookiesKeys.LOCALE, value: selectedLocale ?? "" });
 
     router
       .push({ pathname: router.pathname, query: router.query }, router.asPath, {

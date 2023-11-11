@@ -5,6 +5,11 @@
   background-color: var(--colors__background_light);
   box-shadow: var(--shadow__2dp);
   color: var(--colors__font_dark);
+
+  :global(.dark) & {
+    background-color: var(--colors__background_very_dark);
+    color: var(--colors__font_light);
+  }
 }
 
 .poster {
@@ -23,4 +28,8 @@
   margin: 0 var(--dp__8);
   transform: rotate(180deg);
   color: var(--colors__background_dark);
+
+  :global(.dark) & {
+    color: var(--colors__font_extra_light);
+  }
 }

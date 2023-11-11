@@ -18,6 +18,15 @@
   --colors__font_extra_light: #{getColorVarValue("font_extra_light")};
 
   --colors__placeholder: #{getColorVarValue("placeholder")};
+
+  &.dark {
+    --colors__background_very_dark: #{getColorVarValue(
+        "dark__background_very_dark"
+      )};
+    --colors__background_dark: #{getColorVarValue("dark__background_dark")};
+    --colors__font_medium: #{getColorVarValue("dark__font_medium")};
+    --colors__font_light: #{getColorVarValue("dark__font_light")};
+  }
   /**/
 
   /* FONTS */
@@ -90,6 +99,10 @@ html {
   height: 100%;
   font-size: 62.5%;
   background-color: var(--colors__background_light);
+
+  &.dark {
+    background-color: var(--colors__background_dark);
+  }
 }
 
 body {
@@ -98,6 +111,10 @@ body {
   color: var(--colors__font_medium);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  .dark & {
+    color: var(--colors__font_light);
+  }
 }
 
 :where(h1, h2, h3, h4, h5, h6, p) {

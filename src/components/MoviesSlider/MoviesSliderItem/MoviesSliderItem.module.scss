@@ -8,6 +8,10 @@
   border-radius: var(--dp__8);
   color: var(--colors__font_dark);
   scroll-snap-align: start;
+
+  :global(.dark) & {
+    color: var(--colors__font_light);
+  }
 }
 
 .posterContainer {
@@ -21,6 +25,10 @@
 
 .genres {
   font: var(--fonts__m);
+
+  :global(.dark) & {
+    color: var(--colors__font_medium);
+  }
 }
 
 .voteAverage {

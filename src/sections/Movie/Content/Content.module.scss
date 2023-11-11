@@ -22,6 +22,14 @@
     border-radius: 0.2rem;
     background-color: var(--colors__background_dark);
   }
+
+  :global(.dark) &:before {
+    background-color: var(--colors__background_very_dark);
+  }
+
+  :global(.dark) & {
+    background-color: var(--colors__background_dark);
+  }
 }
 
 .tagline {

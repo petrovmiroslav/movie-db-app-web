@@ -1,8 +1,8 @@
 import React from "react";
 import { cn, commonCss } from "../../utils/styles";
-import css from "./PageHeaderLayout.module.scss";
 import { useHeaderHeight } from "../../hooks/useHeaderHeight";
 import { useWindowSize } from "../../hooks/useWindowSize";
+import css from "./PageHeaderLayout.module.scss";
 
 type PageHeaderLayoutProps = {
   children: React.ReactNode;

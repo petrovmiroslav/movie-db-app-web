@@ -14,6 +14,7 @@ import { Header } from "../../sections/Movie/Header/Header";
 import { throttle } from "../../utils/functions";
 import { genresQueries } from "../../features/genres/genres.queries";
 import { getServerSideTranslations } from "../../utils/i18n/i18n";
+import { getThemeFromCookiesSSR } from "../../features/theme/utils/utils";
 import css from "../../sections/Movie/Movie.module.scss";
 
 const getScrollY = () => (typeof window !== "undefined" ? window.scrollY : 0);
@@ -58,6 +59,7 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
         ns: ["movie"],
       })),
       queryClientDehydratedState,
+      themeSetting: getThemeFromCookiesSSR(context.req.cookies),
     },
   };
 };

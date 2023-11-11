@@ -54,7 +54,7 @@ export const TestApp = (props: React.PropsWithChildren) => {
   return (
     <I18nextProvider i18n={i18nClient}>
       <QueryClientProvider client={testQueryClient}>
-        <CommonApp>{props.children}</CommonApp>
+        <CommonApp themeSetting={undefined}>{props.children}</CommonApp>
       </QueryClientProvider>
     </I18nextProvider>
   );

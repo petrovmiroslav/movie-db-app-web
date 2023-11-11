@@ -9,6 +9,7 @@ import { MovieId } from "../../../../features/movies/movies.types";
 import { TestApp } from "../../../../utils/tests";
 import css from "../FavoriteButton.module.scss";
 import { server } from "../../../../../__mocks__/msw/server";
+import "../../../../../__mocks__/matchMedia";
 import userEvent from "@testing-library/user-event";
 import { i18Resources } from "../../../../../@types/i18next";
 

@@ -13,4 +13,8 @@
   background-color: var(--colors__background_dark);
   font: var(--fonts__m);
   color: var(--colors__font_dark);
+
+  :global(.dark) & {
+    background-color: var(--colors__background_medium);
+  }
 }

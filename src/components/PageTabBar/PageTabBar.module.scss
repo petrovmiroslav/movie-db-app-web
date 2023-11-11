@@ -7,6 +7,10 @@
   background-color: var(--colors__background_light);
   box-shadow: var(--shadow__8dp);
   z-index: 1;
+
+  :global(.dark) & {
+    background-color: var(--colors__background_dark);
+  }
 }
 
 .list {
@@ -27,10 +31,18 @@
   font: var(--fonts__s);
   color: var(--colors__background_very_dark);
   text-align: center;
-}
 
-.item_selected {
-  color: var(--colors__primary);
+  &_selected {
+    color: var(--colors__primary);
+  }
+
+  :global(.dark) & {
+    color: var(--colors__font_light);
+
+    &_selected {
+      color: var(--colors__primary);
+    }
+  }
 }
 
 .icon {

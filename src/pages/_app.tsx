@@ -20,10 +20,14 @@ import { HeaderHeightContextProvider } from "../hooks/useHeaderHeight";
 import { AppHead } from "../components/AppHead/AppHead";
 import { appWithTranslation } from "next-i18next";
 import { queryClientConfig } from "../utils/api/reactQuery";
+import {
+  ThemeProvider,
+  ThemeProviderProps,
+} from "../features/theme/components/ThemeProvider/ThemeProvider";
 
-type CommonAppProps = {
-  children: React.ReactNode;
-};
+type CommonAppProps = React.PropsWithChildren<
+  {} & Pick<ThemeProviderProps, "themeSetting">
+>;
 export const CommonApp = (props: CommonAppProps) => {
   const { children } = props;
 
@@ -31,17 +35,19 @@ export const CommonApp = (props: CommonAppProps) => {
     <>
       <AppHead />
 
-      <ConfigurationContextProvider>
-        <FavoritesDictContextProvider>
-          <GenresDictContextProvider>
-            <WindowSizeContextProvider>
-              <HeaderHeightContextProvider>
-                {children}
-              </HeaderHeightContextProvider>
-            </WindowSizeContextProvider>
-          </GenresDictContextProvider>
-        </FavoritesDictContextProvider>
-      </ConfigurationContextProvider>
+      <ThemeProvider themeSetting={props.themeSetting}>
+        <ConfigurationContextProvider>
+          <FavoritesDictContextProvider>
+            <GenresDictContextProvider>
+              <WindowSizeContextProvider>
+                <HeaderHeightContextProvider>
+                  {children}
+                </HeaderHeightContextProvider>
+              </WindowSizeContextProvider>
+            </GenresDictContextProvider>
+          </FavoritesDictContextProvider>
+        </ConfigurationContextProvider>
+      </ThemeProvider>
 
       <ReactQueryDevtoolsProd />
     </>
@@ -67,11 +73,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={queryClientDehydratedState}>
-        <CommonApp>{getLayout(<Component {...restPageProps} />)}</CommonApp>
+        <CommonApp themeSetting={pageProps.themeSetting}>
+          {getLayout(<Component {...restPageProps} />)}
+        </CommonApp>
       </Hydrate>
     </QueryClientProvider>
   );
 };
 
-// noinspection JSUnusedGlobalSymbols
 export default appWithTranslation(App);

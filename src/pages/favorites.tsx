@@ -12,6 +12,7 @@ export const getStaticProps: GetStaticPropsType = async (context) => {
   return {
     props: {
       ...(await getServerSideTranslations({ locale: context.locale })),
+      themeSetting: null,
     },
   };
 };

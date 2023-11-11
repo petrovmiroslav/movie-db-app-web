@@ -2,5 +2,8 @@
   "language": {
     "header": "Language"
   },
+  "theme": {
+    "header": "Theme"
+  },
   "saveButtonText": "save"
 }

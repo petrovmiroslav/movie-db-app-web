@@ -16,6 +16,7 @@ import uniqBy from "lodash/uniqBy";
 import { Header } from "../sections/Search/Header/Header";
 import { genresQueries } from "../features/genres/genres.queries";
 import { getServerSideTranslations } from "../utils/i18n/i18n";
+import { getThemeFromCookiesSSR } from "../features/theme/utils/utils";
 import css from "../sections/Search/Search.module.scss";
 
 const debounceQueryDelay = 500;
@@ -50,6 +51,7 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
         ns: ["search"],
       })),
       queryClientDehydratedState,
+      themeSetting: getThemeFromCookiesSSR(context.req.cookies),
     },
   };
 };
@@ -68,7 +70,7 @@ const Search: PageWithLayout = () => {
   const isTransitioning = trimmedQueryInputValue !== debouncedQuery;
   const queryParam = !isTransitioning ? debouncedQuery : "";
 
-  const { data, fetchNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
     ...moviesQueries.search({ query: queryParam, language: router.locale }),
     getNextPageParam: getNextPageNumber,
     enabled: Boolean(queryParam),
@@ -109,7 +111,7 @@ const Search: PageWithLayout = () => {
       <Results moviesList={moviesList} />
       <InView
         rootMargin="0px 0px 100%"
-        onChange={(inView) => inView && fetchNextPage()}
+        onChange={(inView) => inView && hasNextPage && fetchNextPage()}
       />
     </div>
   );

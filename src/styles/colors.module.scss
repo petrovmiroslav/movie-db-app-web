@@ -14,6 +14,11 @@ $colors: (
   "font_light": rgba(0, 0, 0, 0.4),
   "font_extra_light": rgba(255, 255, 255, 0.5),
   "placeholder": #eeeeee,
+
+  "dark__background_dark": #2d2d2d,
+  "dark__background_very_dark": rgb(18, 18, 18),
+  "dark__font_medium": rgba(255, 255, 255, 0.64),
+  "dark__font_light": rgba(255, 255, 255, 0.92),
 );
 
 @function getColorVarValue($name) {

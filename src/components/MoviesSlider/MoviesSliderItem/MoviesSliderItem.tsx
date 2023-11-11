@@ -43,7 +43,11 @@ export const MoviesSliderItem = React.memo<MoviesSliderItemProps>((props) => {
 
       <TitleMovieCard className={css.title}>{title}</TitleMovieCard>
 
-      <GenresNames genreList={genres} genreIdList={genresIds} />
+      <GenresNames
+        className={css.genres}
+        genreList={genres}
+        genreIdList={genresIds}
+      />
 
       {voteAverage !== undefined && (
         <p className={css.voteAverage}>{getRoundedVote(voteAverage)}</p>
