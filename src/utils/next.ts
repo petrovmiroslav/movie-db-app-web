@@ -47,6 +47,15 @@ export const apiHandlerWrap = async (
         .json(getSafeResponseError(error));
     }
 
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "status" in error &&
+      typeof error.status === "number"
+    ) {
+      return res.status(error.status).json(getSafeResponseError(error));
+    }
+
     res.status(500).json(toErrorWithMessage(getSafeResponseError(error)));
   }
 };

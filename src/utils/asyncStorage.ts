@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { submitError } from "./errors";
 
 export enum AsyncStorageKeys {
   FAVORITES = "favorites",
@@ -10,8 +11,9 @@ export const getAsyncStorageData = async (
   try {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
-  } catch (e) {
-    console.error("Error: getAsyncStorageData", e);
+  } catch (error) {
+    console.error("Error: getAsyncStorageData", error);
+    submitError({ error });
   }
 };
 
@@ -22,7 +24,8 @@ export const setAsyncStorageData = async (
   try {
     const jsonValue = JSON.stringify(value);
     await AsyncStorage.setItem(key, jsonValue);
-  } catch (e) {
-    console.error("Error: setAsyncStorageData", e);
+  } catch (error) {
+    console.error("Error: setAsyncStorageData", error);
+    submitError({ error });
   }
 };

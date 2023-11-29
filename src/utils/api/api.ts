@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { config } from "../../constants/config";
-import { ErrorWithMessage, isResponseError } from "../errors";
+import { ErrorWithMessage, isResponseError, submitError } from "../errors";
 
 type ResponseErrorDataType = {
   details?: string[];
@@ -34,6 +34,20 @@ appAxiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
+appAxiosInstance.interceptors.response.use(undefined, (error) => {
+  if (config.IS_DEV) {
+    console.error("Axios interceptors: ", error);
+  }
+
+  submitError({ error });
+
+  if (isResponseError(error)) {
+    error = getSafeResponseError(error);
+  }
+
+  return Promise.reject(error);
+});
+
 /* for filter sensitive error data for front end side
  * e.g. Authorisation header with api key*/
 export const getSafeResponseError = (
@@ -42,7 +56,7 @@ export const getSafeResponseError = (
   isResponseError(error)
     ? {
         message: error.message,
-        status: error.status,
+        status: error.response?.status ?? error.status,
         data: error.response?.data,
       }
     : error;

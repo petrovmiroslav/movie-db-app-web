@@ -1,4 +1,5 @@
 import { ResponseError } from "./api/api";
+import * as Sentry from "@sentry/nextjs";
 
 export type ErrorWithMessage = {
   message: string;
@@ -24,3 +25,7 @@ export const isResponseError = (error: unknown): error is ResponseError =>
   isErrorWithMessage(error) &&
   "isAxiosError" in error &&
   Boolean(error.isAxiosError);
+
+export const submitError = (params: { error: unknown }) => {
+  Sentry.captureException(params.error);
+};

@@ -41,3 +41,6 @@ next-env.d.ts
 /playwright-report/
 /playwright/.cache/
 playwright-report
+
+# Sentry Config File
+.sentryclirc

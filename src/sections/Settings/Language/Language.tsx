@@ -7,6 +7,7 @@ import { LanguageListItem } from "./LanguageListItem/LanguageListItem";
 import { PrimaryButton } from "../../../components/buttons/PrimaryButton/PrimaryButton";
 import { useTranslation } from "next-i18next";
 import { CookiesKeys, setClientCookies } from "../../../utils/cookies/cookies";
+import { submitError } from "../../../utils/errors";
 import css from "./Language.module.scss";
 
 export const Language = React.memo(() => {
@@ -34,7 +35,10 @@ export const Language = React.memo(() => {
       .push({ pathname: router.pathname, query: router.query }, router.asPath, {
         locale: selectedLocale,
       })
-      .catch(console.log.bind(console));
+      .catch((error) => {
+        console.log(error);
+        submitError({ error });
+      });
   };
 
   return (
