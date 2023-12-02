@@ -15,6 +15,7 @@ import { throttle } from "../../utils/functions";
 import { genresQueries } from "../../features/genres/genres.queries";
 import { getServerSideTranslations } from "../../utils/i18n/i18n";
 import { getThemeFromCookiesSSR } from "../../features/theme/utils/utils";
+import { typeCheckers } from "../../utils/types";
 import css from "../../sections/Movie/Movie.module.scss";
 
 const getScrollY = () => (typeof window !== "undefined" ? window.scrollY : 0);
@@ -26,7 +27,16 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   const queryClient = new QueryClient();
 
-  const movieId = Number(movieIdQueryParam) as MovieId;
+  const movieId = Number(movieIdQueryParam);
+
+  if (!typeCheckers.numberFinite<MovieId>(movieId)) {
+    return {
+      redirect: {
+        destination: "/404",
+        permanent: false,
+      },
+    };
+  }
 
   await Promise.allSettled([
     queryClient.prefetchQuery(configurationQueries.configuration),
@@ -64,7 +74,7 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
   };
 };
 
-const Movie: PageWithLayout = () => {
+const Movie = () => {
   const router = useRouter();
 
   const { movieId: movieIdQueryParam } = router.query;
@@ -146,9 +156,17 @@ const Movie: PageWithLayout = () => {
   );
 };
 
-Movie.getLayout = (page) => {
+const Page: PageWithLayout = () => {
+  const router = useRouter();
+
+  const { movieId: movieIdQueryParam } = router.query;
+
+  return <Movie key={Number(movieIdQueryParam)} />;
+};
+
+Page.getLayout = (page) => {
   return <PageLayout>{page}</PageLayout>;
 };
 
 // noinspection JSUnusedGlobalSymbols
-export default Movie;
+export default Page;
