@@ -1,7 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { PageLayout } from "../layouts/PageLayout/PageLayout";
 import { PageHeader } from "../components/PageHeader/PageHeader";
-import { GetServerSidePropsType, PageWithLayout } from "../utils/next";
+import {
+  checkIsClientSideDataFetching,
+  GetServerSidePropsType,
+  PageWithLayout,
+} from "../utils/next";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { configurationQueries } from "../features/configuration/configuration.queries";
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -29,15 +33,17 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
 
   const queryClient = new QueryClient();
 
-  await Promise.allSettled([
-    queryClient.prefetchQuery(configurationQueries.configuration),
-    queryClient.prefetchInfiniteQuery(
-      moviesQueries.discover({ ...query, language: context.locale })
-    ),
-    queryClient.prefetchQuery(
-      genresQueries.movie({ language: context.locale })
-    ),
-  ]);
+  if (!checkIsClientSideDataFetching(context)) {
+    await Promise.allSettled([
+      queryClient.prefetchQuery(configurationQueries.configuration),
+      queryClient.prefetchInfiniteQuery(
+        moviesQueries.discover({ ...query, language: context.locale })
+      ),
+      queryClient.prefetchQuery(
+        genresQueries.movie({ language: context.locale })
+      ),
+    ]);
+  }
 
   const queryClientDehydratedState = JSON.parse(
     JSON.stringify(dehydrate(queryClient))

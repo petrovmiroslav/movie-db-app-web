@@ -3,7 +3,11 @@ import { PageLayout } from "../../layouts/PageLayout/PageLayout";
 import { useRouter } from "next/router";
 import { AppendToResponse } from "../../features/movies/movies.api";
 import { MovieId } from "../../features/movies/movies.types";
-import { GetServerSidePropsType, PageWithLayout } from "../../utils/next";
+import {
+  checkIsClientSideDataFetching,
+  GetServerSidePropsType,
+  PageWithLayout,
+} from "../../utils/next";
 import { dehydrate, QueryClient } from "@tanstack/query-core";
 import { useQuery } from "@tanstack/react-query";
 import { moviesQueries } from "../../features/movies/movies.queries";
@@ -38,25 +42,27 @@ export const getServerSideProps: GetServerSidePropsType = async (context) => {
     };
   }
 
-  await Promise.allSettled([
-    queryClient.prefetchQuery(configurationQueries.configuration),
-    queryClient.prefetchQuery(
-      moviesQueries.movie({
-        movieId,
-        language: context.locale,
-        includes: [AppendToResponse.IMAGES],
-      })
-    ),
-    queryClient.prefetchInfiniteQuery(
-      moviesQueries.recommendations({ movieId, language: context.locale })
-    ),
-    queryClient.prefetchInfiniteQuery(
-      moviesQueries.similar({ movieId, language: context.locale })
-    ),
-    queryClient.prefetchQuery(
-      genresQueries.movie({ language: context.locale })
-    ),
-  ]);
+  if (!checkIsClientSideDataFetching(context)) {
+    await Promise.allSettled([
+      queryClient.prefetchQuery(configurationQueries.configuration),
+      queryClient.prefetchQuery(
+        moviesQueries.movie({
+          movieId,
+          language: context.locale,
+          includes: [AppendToResponse.IMAGES],
+        })
+      ),
+      queryClient.prefetchInfiniteQuery(
+        moviesQueries.recommendations({ movieId, language: context.locale })
+      ),
+      queryClient.prefetchInfiniteQuery(
+        moviesQueries.similar({ movieId, language: context.locale })
+      ),
+      queryClient.prefetchQuery(
+        genresQueries.movie({ language: context.locale })
+      ),
+    ]);
+  }
 
   const queryClientDehydratedState = JSON.parse(
     JSON.stringify(dehydrate(queryClient))

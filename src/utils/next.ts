@@ -10,7 +10,7 @@ import { isResponseError, toErrorWithMessage } from "./errors";
 import { AxiosResponse } from "axios";
 import { appAxiosInstance, getSafeResponseError } from "./api/api";
 import { I18nextSSRConfig } from "./i18n/i18n";
-import { GetStaticProps } from "next/types";
+import { GetServerSidePropsContext, GetStaticProps } from "next/types";
 import { ThemesSettings } from "../features/theme/constants";
 
 export interface PageProps {}
@@ -89,3 +89,7 @@ export const passRequest = (
     }
   }
 };
+
+export const checkIsClientSideDataFetching = (
+  context: GetServerSidePropsContext
+) => context.req.url?.startsWith("/_next");

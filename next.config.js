@@ -3,6 +3,9 @@
 const { i18n } = require("./next-i18next.config.js");
 
 const nextConfig = {
+  experimental: {
+    scrollRestoration: true,
+  },
   reactStrictMode: true,
   swcMinify: true,
   images: {

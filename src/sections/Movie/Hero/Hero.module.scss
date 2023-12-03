@@ -15,6 +15,7 @@
 }
 
 .content {
+  min-height: 24rem;
   padding: var(--dp__24) var(--dp__16) var(--dp__48);
   position: relative;
   background-color: var(--colors__background_very_dark);
